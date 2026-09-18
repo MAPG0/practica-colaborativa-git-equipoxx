@@ -2,7 +2,7 @@
 
 int clasificarEvento(char evento) ;
 void actualizarMatriz(int *fila, int columna);
-
+int detectarAtaque(int intentosFallidos);
 
 
 int main() {
@@ -26,13 +26,34 @@ int main() {
     int matriz[4][4] = {0};
 
     int columna;
-
+    int intentosFallidos;
+    int resultadoAtaque;
 
 for (int i = 0; i < totalEventos; i++) {
 
     columna = clasificarEvento(eventos[i]);
     actualizarMatriz(matriz[equipos[i]], columna);
 }
+
+
+
+for (int i = 0; i < 4; i++) {
+
+    intentosFallidos = matriz[i][1] + matriz[i][2];
+
+    resultadoAtaque = detectarAtaque(intentosFallidos);
+
+    printf("PC-0%d: %d intentos fallidos - ", i + 1, intentosFallidos);
+
+    if (resultadoAtaque == 1) {
+        printf("Posible ataque\n");
+    } else {
+        printf("Normal\n");
+    }
+}
+
+
+
 printf("Matriz de resultados:\n");
 
 for (int i = 0; i < 4; i++) {
@@ -75,3 +96,16 @@ int clasificarEvento(char evento) {
 void actualizarMatriz(int *fila, int columna) {
     (*(fila + columna))++;
 }
+
+
+
+int detectarAtaque(int intentosFallidos) {
+
+    if (intentosFallidos > 3) {
+        return 1;
+    }
+
+    return 0;
+}
+
+

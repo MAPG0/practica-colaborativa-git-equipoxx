@@ -32,7 +32,12 @@ int main() {
 for (int i = 0; i < totalEventos; i++) {
 
     columna = clasificarEvento(eventos[i]);
-    actualizarMatriz(matriz[equipos[i]], columna);
+    
+    //implementacion mia Quiet, evita que se intente acceder a una columna que no existe
+    if (columna != -1) {
+            actualizarMatriz(matriz[equipos[i]], columna);
+    }
+    
 }
 
 
@@ -56,13 +61,22 @@ for (int i = 0; i < 4; i++) {
 
 printf("Matriz de resultados:\n");
 
+printf("        a b c d\n");
+
 for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
         printf("%d ", matriz[i][j]);
     }
     printf("\n");
 }
-
+	// imprime el log de los eventos como lo pide la practica, veremos que se trabaja con los dos arreglos , fusionados desde el mismo indice.
+	for (int i = 0; i < totalEventos; i++) {
+        printf("Evento %d: PC-0%d - %c\n",
+               i + 1,
+               equipos[i] + 1,
+               eventos[i]);
+    }
+	
     return 0;
 
 }
@@ -89,7 +103,7 @@ int clasificarEvento(char evento) {
 	if (evento == 'd') {
     return 3;
 }
-
+	return -1; //solo si el evento no es reconocido como tal
 }
 
 

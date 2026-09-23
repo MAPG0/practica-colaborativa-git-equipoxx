@@ -3,6 +3,7 @@
 int clasificarEvento(char evento) ;
 void actualizarMatriz(int *fila, int columna);
 int detectarAtaque(int intentosFallidos);
+void mostrarResultados(int matriz[4][4], int equipos[], char eventos[], int totalEventos);
 
 
 int main() {
@@ -41,40 +42,15 @@ for (int i = 0; i < totalEventos; i++) {
 }
 
 
-
-for (int i = 0; i < 4; i++) {
-
-    intentosFallidos = matriz[i][1] + matriz[i][2];
-
-    resultadoAtaque = detectarAtaque(intentosFallidos);
-
-    printf("PC-0%d: %d intentos fallidos - ", i + 1, intentosFallidos);
-
-    if (resultadoAtaque == 1) {
-        printf("Posible ataque\n");
-    } else {
-        printf("Normal\n");
-    }
-}
+mostrarResultados(matriz, equipos, eventos, totalEventos);
 
 
-
-printf("Matriz de resultados:\n");
-
-printf("        a b c d\n");
-
-for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
-        printf("%d ", matriz[i][j]);
-    }
-    printf("\n");
-}
 	// imprime el log de los eventos como lo pide la practica, veremos que se trabaja con los dos arreglos , fusionados desde el mismo indice.
 	for (int i = 0; i < totalEventos; i++) {
         printf("Evento %d: PC-0%d - %c\n",
                i + 1,
-               equipos[i] + 1,
-               eventos[i]);
+               equipos[i] + 1,eventos[i]);
+               
     }
 	
     return 0;
@@ -120,6 +96,54 @@ int detectarAtaque(int intentosFallidos) {
     }
 
     return 0;
+}
+void mostrarResultados(int matriz[4][4], int equipos[], char eventos[], int totalEventos) {
+
+    int intentosFallidos;
+    int resultadoAtaque;
+
+    printf("\nResultados:\n");
+
+    for (int i = 0; i < 4; i++) {
+
+        intentosFallidos = matriz[i][1] + matriz[i][2];
+
+        resultadoAtaque = detectarAtaque(intentosFallidos);
+
+        printf("PC-0%d: %d intentos fallidos - ", i + 1, intentosFallidos);
+
+        if (resultadoAtaque == 1) {
+            printf("Posible ataque\n");
+        } else {
+            printf("Normal\n");
+        }
+    }
+
+
+    printf("\nMatriz de resultados:\n");
+    printf("        a b c d\n");
+
+    for (int i = 0; i < 4; i++) {
+
+        printf("PC-0%d: ", i + 1);
+
+        for (int j = 0; j < 4; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+
+        printf("\n");
+    }
+
+
+    printf("\nLog de eventos:\n");
+
+    for (int i = 0; i < totalEventos; i++) {
+
+        printf("Evento %d: PC-0%d - %c\n",
+               i + 1,
+               equipos[i] + 1,
+               eventos[i]);
+    }
 }
 
 
